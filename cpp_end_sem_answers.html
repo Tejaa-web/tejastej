@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C++ End Semester Answers</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@300;400;600;700&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #21262d;
+    --border: #30363d;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #f78166;
+    --accent4: #d2a8ff;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --code-bg: #0d1117;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  header {
+    background: linear-gradient(135deg, #1a1f35 0%, #0d1117 60%);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 24px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%; transform: translateX(-50%);
+    width: 400px; height: 200px;
+    background: radial-gradient(ellipse, rgba(88,166,255,0.15), transparent 70%);
+  }
+  header h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; }
+  header h1 span { color: var(--accent); }
+  header p { color: var(--muted); margin-top: 6px; font-size: 0.9rem; }
+
+  .toc {
+    max-width: 860px;
+    margin: 32px auto;
+    padding: 0 20px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .toc-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: block;
+  }
+  .toc-card:hover { border-color: var(--accent); background: var(--surface2); }
+  .toc-card .unit-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--muted); }
+  .toc-card .unit-title { font-weight: 600; font-size: 0.95rem; margin-top: 4px; }
+  .toc-card.u1 .unit-title { color: var(--accent); }
+  .toc-card.u2 .unit-title { color: var(--accent2); }
+  .toc-card.u3 .unit-title { color: var(--accent3); }
+  .toc-card.u4 .unit-title { color: var(--accent4); }
+
+  main { max-width: 860px; margin: 0 auto; padding: 0 20px 60px; }
+
+  .unit-section {
+    margin-bottom: 48px;
+  }
+  .unit-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 20px 24px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+  }
+  .unit-header.u1 { background: linear-gradient(90deg, rgba(88,166,255,0.1), transparent); border-color: rgba(88,166,255,0.3); }
+  .unit-header.u2 { background: linear-gradient(90deg, rgba(63,185,80,0.1), transparent); border-color: rgba(63,185,80,0.3); }
+  .unit-header.u3 { background: linear-gradient(90deg, rgba(247,129,102,0.1), transparent); border-color: rgba(247,129,102,0.3); }
+  .unit-header.u4 { background: linear-gradient(90deg, rgba(210,168,255,0.1), transparent); border-color: rgba(210,168,255,0.3); }
+
+  .unit-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem; font-weight: 600;
+    padding: 4px 10px; border-radius: 20px;
+    white-space: nowrap;
+  }
+  .u1 .unit-badge { background: rgba(88,166,255,0.15); color: var(--accent); }
+  .u2 .unit-badge { background: rgba(63,185,80,0.15); color: var(--accent2); }
+  .u3 .unit-badge { background: rgba(247,129,102,0.15); color: var(--accent3); }
+  .u4 .unit-badge { background: rgba(210,168,255,0.15); color: var(--accent4); }
+
+  .unit-header h2 { font-size: 1.2rem; font-weight: 700; }
+
+  .qa-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .qa-item:hover { border-color: #444d56; }
+
+  .qa-question {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .q-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem; font-weight: 600;
+    min-width: 28px; height: 28px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .u1 .q-num { background: rgba(88,166,255,0.15); color: var(--accent); }
+  .u2 .q-num { background: rgba(63,185,80,0.15); color: var(--accent2); }
+  .u3 .q-num { background: rgba(247,129,102,0.15); color: var(--accent3); }
+  .u4 .q-num { background: rgba(210,168,255,0.15); color: var(--accent4); }
+
+  .qa-question strong { font-weight: 600; font-size: 0.95rem; flex: 1; }
+  .toggle-icon { margin-left: auto; color: var(--muted); font-size: 1.1rem; transition: transform 0.2s; flex-shrink: 0; }
+  .qa-item.open .toggle-icon { transform: rotate(90deg); }
+
+  .qa-answer {
+    display: none;
+    padding: 0 20px 20px 62px;
+    color: #cdd3db;
+    font-size: 0.92rem;
+  }
+  .qa-item.open .qa-answer { display: block; }
+
+  .qa-answer p { margin-bottom: 10px; }
+  .qa-answer ul { padding-left: 20px; margin-bottom: 10px; }
+  .qa-answer li { margin-bottom: 6px; }
+  .qa-answer code {
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 0.83rem;
+    color: #79c0ff;
+  }
+  .qa-answer pre {
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 0.82rem;
+    color: #e6edf3;
+    overflow-x: auto;
+    margin: 12px 0;
+    line-height: 1.6;
+  }
+  .qa-answer pre .kw { color: #ff7b72; }
+  .qa-answer pre .ty { color: #79c0ff; }
+  .qa-answer pre .fn { color: #d2a8ff; }
+  .qa-answer pre .cm { color: #8b949e; }
+  .qa-answer pre .st { color: #a5d6ff; }
+  .qa-answer pre .num { color: #f2cc60; }
+
+  .tip {
+    background: rgba(88,166,255,0.08);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: #a8c7f5;
+  }
+  .tip.green { background: rgba(63,185,80,0.08); border-color: var(--accent2); color: #9fd9a5; }
+  .tip.orange { background: rgba(247,129,102,0.08); border-color: var(--accent3); color: #f5b9ab; }
+
+  .expand-all {
+    display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 16px;
+  }
+  .expand-all button {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.82rem;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .expand-all button:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media(max-width:600px) {
+    .toc-grid { grid-template-columns: 1fr; }
+    header h1 { font-size: 1.5rem; }
+    .qa-answer { padding-left: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>C++ End Semester <span>Answer Guide</span></h1>
+  <p>2 Credits Paper · 4 Units · Simple English Explanations</p>
+</header>
+
+<div class="toc">
+  <div class="toc-grid">
+    <a href="#unit1" class="toc-card u1"><div class="unit-num">UNIT 1</div><div class="unit-title">Basics of C++ &amp; Functions</div></a>
+    <a href="#unit2" class="toc-card u2"><div class="unit-num">UNIT 2</div><div class="unit-title">Classes, Objects &amp; Constructors</div></a>
+    <a href="#unit3" class="toc-card u3"><div class="unit-num">UNIT 3</div><div class="unit-title">Operator Overloading &amp; Inheritance</div></a>
+    <a href="#unit4" class="toc-card u4"><div class="unit-num">UNIT 4</div><div class="unit-title">Polymorphism, Templates &amp; Exceptions</div></a>
+  </div>
+</div>
+
+<main>
+
+<!-- ========== UNIT 1 ========== -->
+<div class="unit-section" id="unit1">
+  <div class="unit-header u1">
+    <span class="unit-badge">UNIT 1</span>
+    <h2>Basics of C++ &amp; Functions (17 Questions)</h2>
+  </div>
+  <div class="expand-all">
+    <button onclick="toggleAll('unit1', true)">Expand All</button>
+    <button onclick="toggleAll('unit1', false)">Collapse All</button>
+  </div>
+
+  <!-- Q1 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q1</span><strong>Procedure Oriented Programming (POP) Languages</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>In <strong>Procedure Oriented Programming</strong>, a program is divided into small parts called <strong>functions or procedures</strong>. The focus is on <em>what to do</em> (the steps/logic), not on data.</p>
+      <ul>
+        <li>Data moves freely between functions — not very secure.</li>
+        <li>Examples: C, Pascal, FORTRAN</li>
+        <li>Good for small programs, but hard to manage for large ones.</li>
+        <li>If you change one function, it may break others that use the same data.</li>
+      </ul>
+      <div class="tip">Think of it like a recipe — a set of steps done one after another.</div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q2</span><strong>Object Oriented Programming (OOP)</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Object Oriented Programming</strong> organizes a program around <em>objects</em> (real-world entities) instead of functions.</p>
+      <ul>
+        <li>Data and functions are bundled together inside a class.</li>
+        <li>Data is protected (encapsulation) — no outside access without permission.</li>
+        <li>Key concepts: <strong>Class, Object, Inheritance, Polymorphism, Encapsulation, Abstraction</strong></li>
+        <li>Examples: C++, Java, Python</li>
+      </ul>
+      <div class="tip">Think of a <em>Car</em> as an object — it has properties (color, speed) and behaviors (start, stop).</div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q3</span><strong>Role of Objects and Classes in C++</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Class</strong>: A blueprint or template. It defines what properties and behaviors an object will have.</p>
+      <p><strong>Object</strong>: A real instance created from a class.</p>
+      <pre><span class="kw">class</span> <span class="ty">Car</span> {         <span class="cm">// Blueprint</span>
+<span class="kw">public</span>:
+  <span class="ty">string</span> color;
+  <span class="ty">void</span> <span class="fn">start</span>() { }
+};
+<span class="ty">Car</span> myCar;           <span class="cm">// Object (real instance)</span></pre>
+      <p>Classes allow us to model real-world things in code. Objects let us use those models in the program.</p>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q4</span><strong>Importance of Reusability in OOP</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Reusability</strong> means writing code once and using it again and again without rewriting it.</p>
+      <ul>
+        <li><strong>Saves time</strong> — don't rewrite the same code.</li>
+        <li><strong>Reduces errors</strong> — tested code is reused safely.</li>
+        <li><strong>Easy to maintain</strong> — fix in one place, fixed everywhere.</li>
+        <li>Achieved through <strong>Inheritance</strong> (child class reuses parent class code) and <strong>Functions/Classes</strong>.</li>
+      </ul>
+      <div class="tip">Example: A <em>Vehicle</em> class written once can be reused by <em>Car</em>, <em>Bus</em>, and <em>Truck</em> classes.</div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q5</span><strong>Important Features of C++</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <ul>
+        <li><strong>Object Oriented</strong> — supports classes, objects, inheritance, polymorphism.</li>
+        <li><strong>Fast &amp; Efficient</strong> — compiled language, runs very fast.</li>
+        <li><strong>Portable</strong> — code can run on different machines.</li>
+        <li><strong>Rich Library</strong> — has many built-in functions.</li>
+        <li><strong>Memory Management</strong> — <code>new</code> and <code>delete</code> give control over memory.</li>
+        <li><strong>Encapsulation</strong> — data hiding using access specifiers.</li>
+        <li><strong>Polymorphism</strong> — one name, many forms.</li>
+        <li><strong>Extensible</strong> — new features can be added easily.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q6</span><strong>Iostream Classes in C++</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>The <code>#include &lt;iostream&gt;</code> header provides input/output functionality.</p>
+      <ul>
+        <li><code>cin</code> — reads input from keyboard (input stream)</li>
+        <li><code>cout</code> — prints output to screen (output stream)</li>
+        <li><code>cerr</code> — prints error messages (unbuffered)</li>
+        <li><code>clog</code> — prints log messages (buffered)</li>
+      </ul>
+      <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+<span class="ty">int</span> <span class="fn">main</span>() {
+  <span class="ty">int</span> x;
+  cin >> x;         <span class="cm">// Read from keyboard</span>
+  cout << x;        <span class="cm">// Print to screen</span>
+}</pre>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q7</span><strong>Comments in C++</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>Comments are notes in code that the compiler ignores. They explain what the code does.</p>
+      <ul>
+        <li><strong>Single-line comment</strong>: starts with <code>//</code></li>
+        <li><strong>Multi-line comment</strong>: starts with <code>/*</code> and ends with <code>*/</code></li>
+      </ul>
+      <pre><span class="cm">// This is a single-line comment</span>
+
+<span class="cm">/* This is a
+   multi-line comment */</span>
+
+<span class="ty">int</span> x = <span class="num">5</span>; <span class="cm">// x stores value 5</span></pre>
+      <div class="tip">Comments make code readable for others (and for you later!).</div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q8</span><strong>Variable Declaration in C++</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>A <strong>variable</strong> is a named storage location for data. Before using a variable, you must declare it with a data type.</p>
+      <pre><span class="ty">int</span> age = <span class="num">20</span>;         <span class="cm">// Integer</span>
+<span class="ty">float</span> marks = <span class="num">95.5</span>;    <span class="cm">// Decimal number</span>
+<span class="ty">char</span> grade = <span class="st">'A'</span>;     <span class="cm">// Single character</span>
+<span class="ty">string</span> name = <span class="st">"Ravi"</span>; <span class="cm">// Text</span>
+<span class="ty">bool</span> passed = <span class="kw">true</span>;   <span class="cm">// True/False</span></pre>
+      <p>Rules: Variable names can't start with numbers, no spaces, can use underscore (_).</p>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q9</span><strong>Use of <code>const</code> in C++</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><code>const</code> makes a variable's value <strong>fixed (unchangeable)</strong> after it's set.</p>
+      <pre><span class="kw">const</span> <span class="ty">float</span> PI = <span class="num">3.14</span>;
+PI = <span class="num">3.5</span>; <span class="cm">// ERROR! Cannot change a const</span></pre>
+      <ul>
+        <li>Prevents accidental changes to important values.</li>
+        <li>Used for mathematical constants, fixed settings, etc.</li>
+        <li>Makes code safer and easier to understand.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q10</span><strong>Use of <code>endl</code> in C++</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><code>endl</code> means <strong>end of line</strong> — it moves the output cursor to the next line AND flushes the output buffer.</p>
+      <pre>cout << <span class="st">"Hello"</span> << endl;
+cout << <span class="st">"World"</span> << endl;
+<span class="cm">// Output:
+// Hello
+// World</span></pre>
+      <div class="tip"><code>endl</code> = <code>'\n'</code> (newline) + buffer flush. Use <code>'\n'</code> for speed, <code>endl</code> when you need immediate output.</div>
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q11</span><strong>Importance of <code>new</code> and <code>delete</code> in C++</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>These are used for <strong>dynamic memory management</strong> — allocating memory during program runtime.</p>
+      <pre><span class="ty">int</span>* ptr = <span class="kw">new</span> <span class="ty">int</span>;    <span class="cm">// Allocate memory for 1 int</span>
+*ptr = <span class="num">42</span>;
+<span class="kw">delete</span> ptr;            <span class="cm">// Free the memory</span>
+
+<span class="ty">int</span>* arr = <span class="kw">new</span> <span class="ty">int</span>[<span class="num">5</span>]; <span class="cm">// Array of 5 ints</span>
+<span class="kw">delete</span>[] arr;          <span class="cm">// Free array memory</span></pre>
+      <ul>
+        <li><code>new</code> — requests memory from the heap at runtime.</li>
+        <li><code>delete</code> — frees that memory to avoid <strong>memory leaks</strong>.</li>
+        <li>Without <code>delete</code>, memory stays occupied even when not needed.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q12</span><strong>Program to Explain Simple Functions in C++</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>A <strong>function</strong> is a reusable block of code that performs a specific task.</p>
+      <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="ty">int</span> <span class="fn">add</span>(<span class="ty">int</span> a, <span class="ty">int</span> b) {   <span class="cm">// Function definition</span>
+  <span class="kw">return</span> a + b;
+}
+
+<span class="ty">int</span> <span class="fn">main</span>() {
+  <span class="ty">int</span> result = <span class="fn">add</span>(<span class="num">5</span>, <span class="num">3</span>); <span class="cm">// Function call</span>
+  cout << <span class="st">"Sum = "</span> << result << endl;
+  <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+      <p>Structure: <code>returnType functionName(parameters) { body }</code></p>
+    </div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q13</span><strong>Pass by Value vs Pass by Reference</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Pass by Value (Call by Value):</strong> A copy of the variable is passed. Original is NOT changed.</p>
+      <pre><span class="ty">void</span> <span class="fn">change</span>(<span class="ty">int</span> x) { x = <span class="num">100</span>; } <span class="cm">// copy changed</span>
+<span class="ty">int</span> a = <span class="num">5</span>;
+<span class="fn">change</span>(a);
+cout << a; <span class="cm">// Still 5!</span></pre>
+      <p><strong>Pass by Reference (Call by Reference):</strong> The actual variable is passed. Original IS changed.</p>
+      <pre><span class="ty">void</span> <span class="fn">change</span>(<span class="ty">int</span> &x) { x = <span class="num">100</span>; } <span class="cm">// original changed</span>
+<span class="ty">int</span> a = <span class="num">5</span>;
+<span class="fn">change</span>(a);
+cout << a; <span class="cm">// Now 100!</span></pre>
+      <div class="tip green">Use <strong>reference</strong> when you want the function to modify the original. Use <strong>value</strong> when you don't want changes.</div>
+    </div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q14</span><strong>Use of Return Statements</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>The <code>return</code> statement <strong>sends a value back</strong> to where the function was called from.</p>
+      <pre><span class="ty">int</span> <span class="fn">square</span>(<span class="ty">int</span> n) {
+  <span class="kw">return</span> n * n;   <span class="cm">// Sends result back</span>
+}
+<span class="ty">int</span> result = <span class="fn">square</span>(<span class="num">4</span>); <span class="cm">// result = 16</span></pre>
+      <ul>
+        <li>For <code>void</code> functions, <code>return;</code> just exits the function (no value).</li>
+        <li>The <code>return</code> type must match the function's declared type.</li>
+        <li>A function can have multiple <code>return</code> statements (exits at first one reached).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q15</span><strong>Default Arguments in Functions</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Default arguments</strong> are values that are automatically used when no argument is provided for a parameter.</p>
+      <pre><span class="ty">void</span> <span class="fn">greet</span>(<span class="ty">string</span> name = <span class="st">"Guest"</span>) {
+  cout << <span class="st">"Hello, "</span> << name << endl;
+}
+
+<span class="fn">greet</span>(<span class="st">"Ravi"</span>);  <span class="cm">// Output: Hello, Ravi</span>
+<span class="fn">greet</span>();        <span class="cm">// Output: Hello, Guest (default used)</span></pre>
+      <div class="tip">Default arguments must be placed at the <strong>end</strong> of the parameter list.</div>
+    </div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q16</span><strong>Concept of Inline Function</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>An <strong>inline function</strong> is a hint to the compiler to <em>copy the function's code</em> directly where it's called, instead of making an actual function call. This makes it <strong>faster</strong>.</p>
+      <pre><span class="kw">inline</span> <span class="ty">int</span> <span class="fn">square</span>(<span class="ty">int</span> x) {
+  <span class="kw">return</span> x * x;
+}</pre>
+      <ul>
+        <li>Reduces the overhead (cost) of function calls.</li>
+        <li>Best for <strong>small, frequently used</strong> functions.</li>
+        <li>Compiler may ignore the hint for large functions.</li>
+      </ul>
+      <div class="tip orange">Normal function: jump → execute → return. Inline: code copied in place — no jumping!</div>
+    </div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="qa-item u1" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q17</span><strong>Scenario: How Functions are Important in Programming</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Scenario: ATM Machine</strong></p>
+      <p>An ATM has multiple tasks: check balance, withdraw money, deposit money, print receipt. Without functions, all this code would be one huge messy block. With functions:</p>
+      <pre><span class="ty">void</span> <span class="fn">checkBalance</span>() { ... }
+<span class="ty">void</span> <span class="fn">withdrawMoney</span>(<span class="ty">int</span> amount) { ... }
+<span class="ty">void</span> <span class="fn">depositMoney</span>(<span class="ty">int</span> amount) { ... }
+<span class="ty">void</span> <span class="fn">printReceipt</span>() { ... }</pre>
+      <p>Benefits shown in this scenario:</p>
+      <ul>
+        <li><strong>Reusability</strong> — <code>checkBalance()</code> is called whenever needed.</li>
+        <li><strong>Easy to fix</strong> — if withdrawal has a bug, only fix that function.</li>
+        <li><strong>Readability</strong> — code is organized and easy to understand.</li>
+        <li><strong>Teamwork</strong> — different team members can write different functions.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ========== UNIT 2 ========== -->
+<div class="unit-section" id="unit2">
+  <div class="unit-header u2">
+    <span class="unit-badge">UNIT 2</span>
+    <h2>Classes, Objects &amp; Constructors (15 Questions)</h2>
+  </div>
+  <div class="expand-all">
+    <button onclick="toggleAll('unit2', true)">Expand All</button>
+    <button onclick="toggleAll('unit2', false)">Collapse All</button>
+  </div>
+
+  <!-- Q1 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q1</span><strong>Structure of a Class in C++</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <pre><span class="kw">class</span> <span class="ty">ClassName</span> {
+<span class="kw">private</span>:          <span class="cm">// Hidden from outside</span>
+  <span class="ty">int</span> data;
+
+<span class="kw">public</span>:           <span class="cm">// Accessible from outside</span>
+  <span class="ty">void</span> <span class="fn">setData</span>(<span class="ty">int</span> d) { data = d; }
+  <span class="ty">int</span>  <span class="fn">getData</span>() { <span class="kw">return</span> data; }
+};</pre>
+      <ul>
+        <li>A class has <strong>data members</strong> (variables) and <strong>member functions</strong> (methods).</li>
+        <li>Access is controlled using <code>private</code>, <code>public</code>, <code>protected</code>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q2</span><strong>Importance of Member Functions</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Member functions</strong> are functions defined inside a class that operate on the class's data.</p>
+      <ul>
+        <li>They <strong>access and modify</strong> private data (which is hidden from the outside world).</li>
+        <li>They <strong>define behaviour</strong> of the object (what it can do).</li>
+        <li>They maintain <strong>data integrity</strong> — data can only be changed in controlled ways.</li>
+        <li>Makes code organized and reusable.</li>
+      </ul>
+      <div class="tip green">Without member functions, private data would be useless because no one could access it!</div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q3</span><strong>Role of Access Specifiers</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>Access specifiers control <strong>who can access</strong> the members of a class.</p>
+      <ul>
+        <li><code>private</code> — only accessible <strong>within</strong> the same class. (Default)</li>
+        <li><code>public</code> — accessible from <strong>anywhere</strong> in the program.</li>
+        <li><code>protected</code> — accessible within the class and <strong>derived (child) classes</strong>.</li>
+      </ul>
+      <div class="tip">Think: <em>private</em> = your diary (only you), <em>public</em> = a noticeboard (everyone), <em>protected</em> = family secret (family only).</div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q4</span><strong>Concept of Constructors</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>A <strong>constructor</strong> is a special function that is <strong>automatically called when an object is created</strong>. It initializes the object's data.</p>
+      <ul>
+        <li>Same name as the class.</li>
+        <li>No return type (not even <code>void</code>).</li>
+        <li>Called automatically — you don't call it manually.</li>
+      </ul>
+      <pre><span class="kw">class</span> <span class="ty">Student</span> {
+<span class="kw">public</span>:
+  <span class="ty">string</span> name;
+  <span class="fn">Student</span>() {               <span class="cm">// Constructor</span>
+    name = <span class="st">"Unknown"</span>;
+  }
+};
+<span class="ty">Student</span> s;  <span class="cm">// Constructor called here automatically</span></pre>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q5</span><strong>Parameterized, Copy, and Default Constructors</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Default Constructor</strong>: No parameters. Sets default values.</p>
+      <pre><span class="fn">Student</span>() { name = <span class="st">"Unknown"</span>; }</pre>
+      <p><strong>Parameterized Constructor</strong>: Takes arguments to initialize with custom values.</p>
+      <pre><span class="fn">Student</span>(<span class="ty">string</span> n) { name = n; }
+<span class="ty">Student</span> s(<span class="st">"Ravi"</span>);  <span class="cm">// name = "Ravi"</span></pre>
+      <p><strong>Copy Constructor</strong>: Creates a new object as a copy of an existing object.</p>
+      <pre><span class="fn">Student</span>(<span class="ty">Student</span> &s2) { name = s2.name; }
+<span class="ty">Student</span> s1(<span class="st">"Ravi"</span>);
+<span class="ty">Student</span> s2(s1);  <span class="cm">// s2 is a copy of s1</span></pre>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q6</span><strong>Constructor Overloading</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Constructor Overloading</strong> means having <em>multiple constructors</em> with the same name but different parameters.</p>
+      <pre><span class="kw">class</span> <span class="ty">Box</span> {
+<span class="kw">public</span>:
+  <span class="ty">int</span> length, width;
+  <span class="fn">Box</span>() { length = <span class="num">0</span>; width = <span class="num">0</span>; }           <span class="cm">// Default</span>
+  <span class="fn">Box</span>(<span class="ty">int</span> l) { length = l; width = l; }         <span class="cm">// 1 arg</span>
+  <span class="fn">Box</span>(<span class="ty">int</span> l, <span class="ty">int</span> w) { length = l; width = w; }  <span class="cm">// 2 args</span>
+};</pre>
+      <p>C++ picks the right constructor based on the arguments you pass.</p>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q7</span><strong>Class Conversion in C++</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Class conversion</strong> means converting an object of one type to another (e.g., from a basic type to a class type, or between class types).</p>
+      <ul>
+        <li><strong>Basic → Class</strong>: Done using a <em>constructor</em> that takes a basic type as argument.</li>
+        <li><strong>Class → Basic</strong>: Done using a <em>conversion function</em> (operator overloading).</li>
+      </ul>
+      <pre><span class="kw">class</span> <span class="ty">Rupees</span> {
+  <span class="ty">float</span> amount;
+<span class="kw">public</span>:
+  <span class="fn">Rupees</span>(<span class="ty">float</span> a) { amount = a; }  <span class="cm">// float → Rupees</span>
+  <span class="kw">operator</span> <span class="ty">float</span>() { <span class="kw">return</span> amount; } <span class="cm">// Rupees → float</span>
+};</pre>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q8</span><strong>Manipulation on Private Data Members</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>Private data members <strong>cannot be accessed directly</strong> from outside the class. They are manipulated using <strong>public member functions</strong> called getters and setters.</p>
+      <pre><span class="kw">class</span> <span class="ty">Student</span> {
+<span class="kw">private</span>:
+  <span class="ty">int</span> marks;      <span class="cm">// Private — hidden!</span>
+<span class="kw">public</span>:
+  <span class="ty">void</span> <span class="fn">setMarks</span>(<span class="ty">int</span> m) { marks = m; } <span class="cm">// Setter</span>
+  <span class="ty">int</span>  <span class="fn">getMarks</span>() { <span class="kw">return</span> marks; }   <span class="cm">// Getter</span>
+};</pre>
+      <div class="tip">This protects data from invalid values — e.g., you can check if marks &lt; 0 before setting it.</div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q9</span><strong>Relationship Between Object and Memory</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <ul>
+        <li>When an object is created, memory is allocated for its <strong>data members</strong>.</li>
+        <li><strong>Member functions</strong> are stored once in memory and shared across all objects.</li>
+        <li>Each object gets its own <strong>copy of data</strong>, but shares the function code.</li>
+        <li>Objects can be created on <strong>Stack</strong> (auto-managed) or <strong>Heap</strong> (using <code>new</code>).</li>
+      </ul>
+      <pre><span class="ty">Student</span> s1;           <span class="cm">// Stack memory</span>
+<span class="ty">Student</span>* s2 = <span class="kw">new</span> <span class="ty">Student</span>(); <span class="cm">// Heap memory</span>
+<span class="kw">delete</span> s2;            <span class="cm">// Must free heap memory</span></pre>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q10</span><strong>Concept of Array</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>An <strong>array</strong> is a collection of elements of the <strong>same data type</strong> stored in <strong>consecutive memory locations</strong>.</p>
+      <pre><span class="ty">int</span> marks[<span class="num">5</span>] = {<span class="num">90</span>, <span class="num">80</span>, <span class="num">75</span>, <span class="num">85</span>, <span class="num">95</span>};
+cout << marks[<span class="num">0</span>]; <span class="cm">// 90 (index starts at 0)</span></pre>
+      <ul>
+        <li>Access elements using index: <code>array[0]</code>, <code>array[1]</code>…</li>
+        <li>Fixed size — cannot grow or shrink.</li>
+        <li>Much easier than creating 5 separate variables!</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q11</span><strong>Concept of Array of Objects</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>Just like an array of integers, we can have an <strong>array of objects</strong>.</p>
+      <pre><span class="kw">class</span> <span class="ty">Student</span> {
+<span class="kw">public</span>:
+  <span class="ty">string</span> name;
+  <span class="ty">int</span> marks;
+};
+
+<span class="ty">Student</span> class1[<span class="num">3</span>]; <span class="cm">// Array of 3 Student objects</span>
+class1[<span class="num">0</span>].name = <span class="st">"Ravi"</span>;
+class1[<span class="num">1</span>].name = <span class="st">"Priya"</span>;</pre>
+      <p>Useful for storing multiple instances of the same type — like a list of students, employees, etc.</p>
+    </div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q12</span><strong>How Strings Can Be a Data Member</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>A <code>string</code> can be a data member of a class, just like <code>int</code> or <code>float</code>.</p>
+      <pre><span class="kw">#include</span> <span class="st">&lt;string&gt;</span>
+<span class="kw">class</span> <span class="ty">Student</span> {
+<span class="kw">public</span>:
+  <span class="ty">string</span> name;   <span class="cm">// String as data member</span>
+  <span class="ty">int</span> rollNo;
+  <span class="fn">Student</span>(<span class="ty">string</span> n, <span class="ty">int</span> r) { name = n; rollNo = r; }
+};</pre>
+      <ul>
+        <li>Strings store text like names, addresses, emails.</li>
+        <li>Use the <code>&lt;string&gt;</code> header.</li>
+        <li>Strings can be compared, concatenated, and searched easily.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q13</span><strong>Importance of Destructors</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>A <strong>destructor</strong> is a special function that is <strong>automatically called when an object is destroyed</strong>. It cleans up memory and resources.</p>
+      <ul>
+        <li>Same name as the class but with a tilde: <code>~ClassName()</code></li>
+        <li>No parameters, no return type.</li>
+        <li>Prevents <strong>memory leaks</strong> — frees any memory the object was using.</li>
+      </ul>
+      <pre><span class="kw">class</span> <span class="ty">Student</span> {
+<span class="kw">public</span>:
+  <span class="fn">~Student</span>() {
+    cout << <span class="st">"Object destroyed"</span> << endl;
+  }
+};</pre>
+    </div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q14</span><strong>Difference Between Constructor and Destructor</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <table style="width:100%; border-collapse:collapse; font-size:0.88rem; margin-top:6px;">
+        <tr style="background:#21262d;">
+          <th style="padding:8px 12px; text-align:left; border:1px solid #30363d;">Feature</th>
+          <th style="padding:8px 12px; text-align:left; border:1px solid #30363d;">Constructor</th>
+          <th style="padding:8px 12px; text-align:left; border:1px solid #30363d;">Destructor</th>
+        </tr>
+        <tr><td style="padding:7px 12px; border:1px solid #30363d;">Purpose</td><td style="padding:7px 12px; border:1px solid #30363d;">Initialize object</td><td style="padding:7px 12px; border:1px solid #30363d;">Clean up object</td></tr>
+        <tr style="background:#161b22;"><td style="padding:7px 12px; border:1px solid #30363d;">Called when</td><td style="padding:7px 12px; border:1px solid #30363d;">Object is created</td><td style="padding:7px 12px; border:1px solid #30363d;">Object is destroyed</td></tr>
+        <tr><td style="padding:7px 12px; border:1px solid #30363d;">Syntax</td><td style="padding:7px 12px; border:1px solid #30363d;"><code>ClassName()</code></td><td style="padding:7px 12px; border:1px solid #30363d;"><code>~ClassName()</code></td></tr>
+        <tr style="background:#161b22;"><td style="padding:7px 12px; border:1px solid #30363d;">Parameters</td><td style="padding:7px 12px; border:1px solid #30363d;">Can have</td><td style="padding:7px 12px; border:1px solid #30363d;">Cannot have</td></tr>
+        <tr><td style="padding:7px 12px; border:1px solid #30363d;">Overloading</td><td style="padding:7px 12px; border:1px solid #30363d;">Possible</td><td style="padding:7px 12px; border:1px solid #30363d;">Not possible</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="qa-item u2" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q15</span><strong>Scenario: Constructors in Real-World Applications</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Scenario: Online Shopping Cart</strong></p>
+      <p>When a user adds an item to the cart, a <em>CartItem</em> object is created. The constructor sets the item name, price, and quantity automatically.</p>
+      <pre><span class="kw">class</span> <span class="ty">CartItem</span> {
+<span class="kw">public</span>:
+  <span class="ty">string</span> name;
+  <span class="ty">float</span> price;
+  <span class="ty">int</span> qty;
+
+  <span class="fn">CartItem</span>(<span class="ty">string</span> n, <span class="ty">float</span> p, <span class="ty">int</span> q) {
+    name = n; price = p; qty = q;
+  }
+};
+<span class="ty">CartItem</span> item(<span class="st">"Laptop"</span>, <span class="num">55000</span>, <span class="num">1</span>);</pre>
+      <p>Without constructors, you'd have to manually set every property every time — error-prone and tedious!</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== UNIT 3 ========== -->
+<div class="unit-section" id="unit3">
+  <div class="unit-header u3">
+    <span class="unit-badge">UNIT 3</span>
+    <h2>Operator Overloading &amp; Inheritance (9 Questions)</h2>
+  </div>
+  <div class="expand-all">
+    <button onclick="toggleAll('unit3', true)">Expand All</button>
+    <button onclick="toggleAll('unit3', false)">Collapse All</button>
+  </div>
+
+  <!-- Q1 -->
+  <div class="qa-item u3" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q1</span><strong>Concept of Operator Overloading — What, Types, Role</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>What is it?</strong> Operator overloading means giving new meaning to existing operators (like <code>+</code>, <code>-</code>, <code>==</code>) when used with objects.</p>
+      <pre><span class="kw">class</span> <span class="ty">Distance</span> {
+<span class="kw">public</span>:
+  <span class="ty">int</span> meters;
+  <span class="ty">Distance</span> <span class="kw">operator</span>+(<span class="ty">Distance</span> d2) {
+    <span class="ty">Distance</span> result;
+    result.meters = meters + d2.meters;
+    <span class="kw">return</span> result;
+  }
+};
+<span class="ty">Distance</span> d1, d2, d3;
+d3 = d1 + d2;  <span class="cm">// Uses overloaded +</span></pre>
+      <p><strong>Types of operators that can be overloaded:</strong></p>
+      <ul>
+        <li>Arithmetic: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code></li>
+        <li>Relational: <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code></li>
+        <li>Unary: <code>++</code>, <code>--</code>, <code>-</code></li>
+        <li>Assignment: <code>=</code></li>
+        <li>I/O: <code>&lt;&lt;</code>, <code>&gt;&gt;</code></li>
+      </ul>
+      <p><strong>Role:</strong> Makes code more natural and readable. Instead of <code>add(d1, d2)</code>, you write <code>d1 + d2</code>.</p>
+      <div class="tip orange">Cannot overload: <code>::</code>, <code>.</code>, <code>?:</code>, <code>sizeof</code></div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="qa-item u3" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q2</span><strong>Concept of Inheritance</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Inheritance</strong> allows a <em>child (derived) class</em> to acquire properties and behaviors of a <em>parent (base) class</em>.</p>
+      <pre><span class="kw">class</span> <span class="ty">Animal</span> {             <span class="cm">// Base class</span>
+<span class="kw">public</span>:
+  <span class="ty">void</span> <span class="fn">eat</span>() { cout << <span class="st">"Eating"</span>; }
+};
+<span class="kw">class</span> <span class="ty">Dog</span> : <span class="kw">public</span> <span class="ty">Animal</span> { <span class="cm">// Derived class</span>
+<span class="kw">public</span>:
+  <span class="ty">void</span> <span class="fn">bark</span>() { cout << <span class="st">"Woof"</span>; }
+};
+<span class="ty">Dog</span> d;
+d.<span class="fn">eat</span>();   <span class="cm">// Inherited from Animal</span>
+d.<span class="fn">bark</span>();  <span class="cm">// Dog's own method</span></pre>
+      <p>Promotes <strong>code reuse</strong> — no need to rewrite common features.</p>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="qa-item u3" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q3</span><strong>Role of <code>protected</code> Access Specifier in Inheritance</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><code>protected</code> members are like <code>private</code>, BUT they are <strong>accessible in derived (child) classes</strong>.</p>
+      <pre><span class="kw">class</span> <span class="ty">Animal</span> {
+<span class="kw">protected</span>:
+  <span class="ty">int</span> age;   <span class="cm">// Protected</span>
+};
+<span class="kw">class</span> <span class="ty">Dog</span> : <span class="kw">public</span> <span class="ty">Animal</span> {
+<span class="kw">public</span>:
+  <span class="ty">void</span> <span class="fn">show</span>() { cout << age; }  <span class="cm">// OK! Child can access</span>
+};</pre>
+      <div class="tip orange">Outside code: <strong>No</strong> access. Child class: <strong>Yes</strong> access. This is the key role of <code>protected</code>.</div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="qa-item u3" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q4</span><strong>Concept of Overriding Member Functions</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Function overriding</strong> means a child class provides its <em>own version</em> of a function that already exists in the parent class.</p>
+      <pre><span class="kw">class</span> <span class="ty">Animal</span> {
+<span class="kw">public</span>:
+  <span class="ty">void</span> <span class="fn">speak</span>() { cout << <span class="st">"Some sound"</span>; }
+};
+<span class="kw">class</span> <span class="ty">Dog</span> : <span class="kw">public</span> <span class="ty">Animal</span> {
+<span class="kw">public</span>:
+  <span class="ty">void</span> <span class="fn">speak</span>() { cout << <span class="st">"Woof"</span>; } <span class="cm">// Override!</span>
+};
+<span class="ty">Dog</span> d;
+d.<span class="fn">speak</span>(); <span class="cm">// Calls Dog's version: "Woof"</span></pre>
+      <div class="tip">Overriding ≠ Overloading. Overriding = same function name in child class. Overloading = same name, different parameters in same class.</div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="qa-item u3" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q5</span><strong>Possible Combinations of Inheritance (Single, Multiple, etc.)</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <ul>
+        <li><strong>Single</strong>: One parent → One child. <code>class B : public A</code></li>
+        <li><strong>Multiple</strong>: Two or more parents → One child. <code>class C : public A, public B</code></li>
+        <li><strong>Multilevel</strong>: A → B → C (chain of inheritance). Grandparent → Parent → Child.</li>
+        <li><strong>Hierarchical</strong>: One parent → Multiple children. <code>A → B, A → C</code></li>
+        <li><strong>Hybrid</strong>: Combination of two or more types above.</li>
+      </ul>
+      <pre><span class="cm">// Multiple Inheritance</span>
+<span class="kw">class</span> <span class="ty">Father</span> { <span class="kw">public</span>: <span class="ty">void</span> <span class="fn">work</span>() {} };
+<span class="kw">class</span> <span class="ty">Mother</span> { <span class="kw">public</span>: <span class="ty">void</span> <span class="fn">cook</span>() {} };
+<span class="kw">class</span> <span class="ty">Child</span> : <span class="kw">public</span> <span class="ty">Father</span>, <span class="kw">public</span> <span class="ty">Mother</span> {};</pre>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="qa-item u3" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q6</span><strong>Hybrid Inheritance and Its Importance</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Hybrid Inheritance</strong> is a mix of two or more types of inheritance in a single program (e.g., Hierarchical + Multiple).</p>
+      <pre><span class="kw">class</span> <span class="ty">A</span> {};
+<span class="kw">class</span> <span class="ty">B</span> : <span class="kw">public</span> <span class="ty">A</span> {};     <span class="cm">// Hierarchical</span>
+<span class="kw">class</span> <span class="ty">C</span> : <span class="kw">public</span> <span class="ty">A</span> {};     <span class="cm">// Hierarchical</span>
+<span class="kw">class</span> <span class="ty">D</span> : <span class="kw">public</span> <span class="ty">B</span>, <span class="kw">public</span> <span class="ty">C</span> {}; <span class="cm">// Multiple</span></pre>
+      <p><strong>Importance:</strong> Models complex real-world relationships. However, it can cause the <strong>Diamond Problem</strong> (ambiguity when D inherits A twice). Solved using <strong>virtual inheritance</strong>.</p>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="qa-item u3" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q7</span><strong>Containership in C++</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Containership (Has-A relationship)</strong>: A class contains an object of another class as its <em>data member</em>. This is different from inheritance (Is-A relationship).</p>
+      <pre><span class="kw">class</span> <span class="ty">Engine</span> {
+<span class="kw">public</span>:
+  <span class="ty">void</span> <span class="fn">start</span>() { cout << <span class="st">"Engine started"</span>; }
+};
+<span class="kw">class</span> <span class="ty">Car</span> {
+  <span class="ty">Engine</span> eng;  <span class="cm">// Car HAS-A Engine (Containership)</span>
+<span class="kw">public</span>:
+  <span class="ty">void</span> <span class="fn">drive</span>() { eng.<span class="fn">start</span>(); }
+};</pre>
+      <div class="tip orange">Inheritance = Dog IS-A Animal. Containership = Car HAS-A Engine.</div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="qa-item u3" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q8</span><strong>Concept of Classes Within Classes</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>A <strong>nested class</strong> is a class defined inside another class.</p>
+      <pre><span class="kw">class</span> <span class="ty">Outer</span> {
+<span class="kw">public</span>:
+  <span class="kw">class</span> <span class="ty">Inner</span> {      <span class="cm">// Nested class</span>
+  <span class="kw">public</span>:
+    <span class="ty">void</span> <span class="fn">display</span>() { cout << <span class="st">"Inner class"</span>; }
+  };
+};
+<span class="ty">Outer</span>::<span class="ty">Inner</span> obj;
+obj.<span class="fn">display</span>();</pre>
+      <ul>
+        <li>Used when Inner class is only relevant inside Outer class.</li>
+        <li>Improves encapsulation and organization.</li>
+        <li>Example: A <em>Node</em> class inside a <em>LinkedList</em> class.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="qa-item u3" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q9</span><strong>Scenario: Inheritance in Real-World Applications</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Scenario: Hospital Management System</strong></p>
+      <p>A hospital has different types of staff: Doctors, Nurses, Admins. All share common properties (name, ID, salary) but have specific behaviors.</p>
+      <pre><span class="kw">class</span> <span class="ty">Staff</span> {           <span class="cm">// Base class</span>
+<span class="kw">public</span>:
+  <span class="ty">string</span> name;
+  <span class="ty">int</span> id;
+  <span class="ty">void</span> <span class="fn">login</span>() {}
+};
+<span class="kw">class</span> <span class="ty">Doctor</span> : <span class="kw">public</span> <span class="ty">Staff</span> {
+<span class="kw">public</span>:
+  <span class="ty">void</span> <span class="fn">prescribe</span>() {}   <span class="cm">// Doctor-specific</span>
+};
+<span class="kw">class</span> <span class="ty">Nurse</span> : <span class="kw">public</span> <span class="ty">Staff</span> {
+<span class="kw">public</span>:
+  <span class="ty">void</span> <span class="fn">giveInjection</span>() {} <span class="cm">// Nurse-specific</span>
+};</pre>
+      <p>Both Doctor and Nurse reuse <code>login()</code> without rewriting it — that's the power of inheritance!</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== UNIT 4 ========== -->
+<div class="unit-section" id="unit4">
+  <div class="unit-header u4">
+    <span class="unit-badge">UNIT 4</span>
+    <h2>Polymorphism, Templates &amp; Exception Handling (9 Questions)</h2>
+  </div>
+  <div class="expand-all">
+    <button onclick="toggleAll('unit4', true)">Expand All</button>
+    <button onclick="toggleAll('unit4', false)">Collapse All</button>
+  </div>
+
+  <!-- Q1 -->
+  <div class="qa-item u4" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q1</span><strong>Concept of Polymorphism in C++</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Polymorphism</strong> means "many forms" — the same function or operator behaving differently in different situations.</p>
+      <ul>
+        <li><strong>Compile-time (Static)</strong>: Function overloading, Operator overloading — decided at compile time.</li>
+        <li><strong>Run-time (Dynamic)</strong>: Virtual functions — decided at runtime based on actual object type.</li>
+      </ul>
+      <pre><span class="kw">class</span> <span class="ty">Shape</span> {
+<span class="kw">public</span>:
+  <span class="kw">virtual</span> <span class="ty">void</span> <span class="fn">draw</span>() { cout << <span class="st">"Shape"</span>; }
+};
+<span class="kw">class</span> <span class="ty">Circle</span> : <span class="kw">public</span> <span class="ty">Shape</span> {
+<span class="kw">public</span>:
+  <span class="ty">void</span> <span class="fn">draw</span>() { cout << <span class="st">"Circle"</span>; }  <span class="cm">// Override</span>
+};
+<span class="ty">Shape</span>* s = <span class="kw">new</span> <span class="ty">Circle</span>();
+s-><span class="fn">draw</span>(); <span class="cm">// Prints "Circle" — runtime decision!</span></pre>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="qa-item u4" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q2</span><strong>Concept of Pointers to Objects</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>A <strong>pointer to an object</strong> stores the memory address of an object, instead of the object itself.</p>
+      <pre><span class="kw">class</span> <span class="ty">Student</span> {
+<span class="kw">public</span>:
+  <span class="ty">string</span> name = <span class="st">"Ravi"</span>;
+};
+
+<span class="ty">Student</span> s;
+<span class="ty">Student</span>* ptr = &s;      <span class="cm">// Pointer to object</span>
+cout << ptr->name;      <span class="cm">// Access using -> arrow</span></pre>
+      <ul>
+        <li>Use <code>-&gt;</code> to access members through a pointer.</li>
+        <li>Used with <code>new</code> for dynamic object creation.</li>
+        <li>Essential for polymorphism and runtime decisions.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="qa-item u4" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q3</span><strong>Concept of Virtual Functions</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>A <strong>virtual function</strong> is a function in the base class declared with the <code>virtual</code> keyword. It allows <strong>runtime polymorphism</strong> — the correct version is called based on the actual object, not the pointer type.</p>
+      <pre><span class="kw">class</span> <span class="ty">Animal</span> {
+<span class="kw">public</span>:
+  <span class="kw">virtual</span> <span class="ty">void</span> <span class="fn">speak</span>() { cout << <span class="st">"..."</span>; }
+};
+<span class="kw">class</span> <span class="ty">Dog</span> : <span class="kw">public</span> <span class="ty">Animal</span> {
+<span class="kw">public</span>:
+  <span class="ty">void</span> <span class="fn">speak</span>() { cout << <span class="st">"Woof"</span>; }
+};
+<span class="ty">Animal</span>* a = <span class="kw">new</span> <span class="ty">Dog</span>();
+a-><span class="fn">speak</span>(); <span class="cm">// "Woof" — Dog's version chosen at runtime</span></pre>
+      <div class="tip">Without <code>virtual</code>, the base class version would always be called. With <code>virtual</code>, the correct child version runs.</div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="qa-item u4" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q4</span><strong>Virtual Functions and Dynamic Binding</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Dynamic Binding</strong> means the function call is resolved at <em>runtime</em> (not at compile time). Virtual functions enable this.</p>
+      <ul>
+        <li><strong>Static Binding</strong>: Normal function calls are resolved at compile time — faster but less flexible.</li>
+        <li><strong>Dynamic Binding</strong>: Virtual function calls are resolved at runtime using a <strong>vtable (virtual table)</strong>.</li>
+      </ul>
+      <p>The vtable is a hidden lookup table that stores addresses of virtual functions. When a virtual function is called through a pointer, C++ looks up the vtable to find the right function.</p>
+      <div class="tip">Virtual functions + Pointers = Dynamic Binding = Runtime Polymorphism.</div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="qa-item u4" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q5</span><strong>The Purpose of <code>this</code> Pointer</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>The <code>this</code> pointer is a <strong>special hidden pointer</strong> available inside every member function. It points to the <em>current object</em> that called the function.</p>
+      <pre><span class="kw">class</span> <span class="ty">Student</span> {
+  <span class="ty">string</span> name;
+<span class="kw">public</span>:
+  <span class="ty">void</span> <span class="fn">setName</span>(<span class="ty">string</span> name) {
+    <span class="kw">this</span>->name = name; <span class="cm">// 'this->name' = class data member</span>
+                        <span class="cm">// 'name' = parameter</span>
+  }
+};</pre>
+      <ul>
+        <li>Resolves name conflicts between data members and parameters.</li>
+        <li>Used to return the current object from a function (<code>return *this</code>).</li>
+        <li>Used in method chaining.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="qa-item u4" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q6</span><strong>Concepts of Templates in C++ — Types + Example</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Templates</strong> allow writing <em>generic code</em> that works with any data type. Write once, use for int, float, string, etc.</p>
+      <p><strong>Types:</strong></p>
+      <p>1. <strong>Function Template</strong>:</p>
+      <pre><span class="kw">template</span> &lt;<span class="kw">typename</span> <span class="ty">T</span>&gt;
+<span class="ty">T</span> <span class="fn">findMax</span>(<span class="ty">T</span> a, <span class="ty">T</span> b) {
+  <span class="kw">return</span> (a > b) ? a : b;
+}
+<span class="fn">findMax</span>(<span class="num">3</span>, <span class="num">7</span>);       <span class="cm">// Works for int</span>
+<span class="fn">findMax</span>(<span class="num">3.5</span>, <span class="num">1.2</span>);   <span class="cm">// Works for float</span></pre>
+      <p>2. <strong>Class Template</strong>:</p>
+      <pre><span class="kw">template</span> &lt;<span class="kw">typename</span> <span class="ty">T</span>&gt;
+<span class="kw">class</span> <span class="ty">Pair</span> {
+<span class="kw">public</span>:
+  <span class="ty">T</span> first, second;
+  <span class="fn">Pair</span>(<span class="ty">T</span> a, <span class="ty">T</span> b) { first = a; second = b; }
+};
+<span class="ty">Pair</span>&lt;<span class="ty">int</span>&gt; p(<span class="num">1</span>, <span class="num">2</span>);
+<span class="ty">Pair</span>&lt;<span class="ty">string</span>&gt; q(<span class="st">"A"</span>, <span class="st">"B"</span>);</pre>
+      <div class="tip">Templates are the foundation of C++ STL (Standard Template Library) — like vector, map, etc.</div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="qa-item u4" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q7</span><strong>Concept of Exception Handling in C++</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p><strong>Exception handling</strong> is a mechanism to <strong>handle runtime errors</strong> gracefully without crashing the program.</p>
+      <p>Uses three keywords: <code>try</code>, <code>throw</code>, <code>catch</code>.</p>
+      <pre><span class="kw">try</span> {
+  <span class="ty">int</span> a = <span class="num">10</span>, b = <span class="num">0</span>;
+  <span class="kw">if</span> (b == <span class="num">0</span>)
+    <span class="kw">throw</span> <span class="st">"Division by zero!"</span>; <span class="cm">// Throw error</span>
+  cout << a / b;
+}
+<span class="kw">catch</span> (<span class="kw">const char</span>* e) {
+  cout << <span class="st">"Error: "</span> << e;        <span class="cm">// Handle error</span>
+}</pre>
+      <ul>
+        <li><code>try</code>: Code that might cause an error.</li>
+        <li><code>throw</code>: Signals that an error has occurred.</li>
+        <li><code>catch</code>: Handles the error.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="qa-item u4" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q8</span><strong>Use of Multiple Catch Statements</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>A single <code>try</code> block can have <strong>multiple <code>catch</code> blocks</strong> to handle different types of errors.</p>
+      <pre><span class="kw">try</span> {
+  <span class="kw">throw</span> <span class="num">42</span>;         <span class="cm">// Throwing an int</span>
+}
+<span class="kw">catch</span> (<span class="ty">int</span> e) {
+  cout << <span class="st">"Int error: "</span> << e;
+}
+<span class="kw">catch</span> (<span class="ty">string</span> e) {
+  cout << <span class="st">"String error: "</span> << e;
+}
+<span class="kw">catch</span> (...) {
+  cout << <span class="st">"Unknown error"</span>;  <span class="cm">// Catches everything else</span>
+}</pre>
+      <ul>
+        <li>C++ matches the thrown value type to the correct <code>catch</code> block.</li>
+        <li><code>catch(...)</code> is a catch-all for any exception type.</li>
+        <li>More specific catches should come before general ones.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="qa-item u4" onclick="toggle(this)">
+    <div class="qa-question"><span class="q-num">Q9</span><strong>Significance of Polymorphism in Modern Programming Languages</strong><span class="toggle-icon">▶</span></div>
+    <div class="qa-answer">
+      <p>Polymorphism is one of the most powerful features of modern OOP languages. Its significance:</p>
+      <ul>
+        <li><strong>Flexibility</strong> — same interface works with different object types. Write one function that handles Circle, Rectangle, Triangle all through a Shape pointer.</li>
+        <li><strong>Extensibility</strong> — add new classes without changing existing code. New shape? Just add a new class.</li>
+        <li><strong>Code Reuse</strong> — generic code works with many types.</li>
+        <li><strong>Real-world modeling</strong> — animals all "speak" but differently; employees all "work" but differently.</li>
+        <li><strong>Framework/Library design</strong> — GUI frameworks, game engines, and web frameworks all rely heavily on polymorphism.</li>
+      </ul>
+      <div class="tip">Without polymorphism, you'd need a separate function for each type. With polymorphism, one function handles all!</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+function toggle(item) {
+  item.classList.toggle('open');
+}
+function toggleAll(unitId, open) {
+  const section = document.getElementById(unitId);
+  section.querySelectorAll('.qa-item').forEach(item => {
+    if (open) item.classList.add('open');
+    else item.classList.remove('open');
+  });
+}
+</script>
+</body>
+</html>
